@@ -56,14 +56,13 @@ def fetch_exchange_rates(
         if response.status_code == 200:
             # Parse the JSON response to extract the CAD to USD exchange rate
             data = response.json()
-            exchange_rate = None
+            exchange_rate = {}
             for observation in data['observations']:
                 if observation['d'] >= start_date and observation['d'] <= end_date:
-                    exchange_rate = math.ceil(
-                        float(observation[f'{serie_name}']['v']))
-                    break
+                    exchange_rate[str(observation['d'])] = float(
+                        observation[f'{serie_name}']['v'])
 
-            if exchange_rate is not None:
+            if len(exchange_rate) > 0:
                 return JSONResponse(
                     status_code=status.HTTP_200_OK,
                     content={
@@ -86,6 +85,7 @@ def fetch_exchange_rates(
                 }
             )
     except Exception as e:
+        print(str(e))
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"error": str(e)}
