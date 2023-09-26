@@ -59,8 +59,8 @@ def fetch_exchange_rates(
             exchange_rate = {}
             for observation in data['observations']:
                 if observation['d'] >= start_date and observation['d'] <= end_date:
-                    exchange_rate[str(observation['d'])] = float(
-                        observation[f'{serie_name}']['v'])
+                    exchange_rate[str(observation['d'])] = math.ceil(
+                        float(observation[f'{serie_name}']['v']) * 100.0) / 100.0
 
             if len(exchange_rate) > 0:
                 return JSONResponse(
