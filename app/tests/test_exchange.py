@@ -10,7 +10,7 @@ def test_get_exchange_rates():
         "from_currency": "USD",
         "to_currency": "CAD",
         "start_date": "2023-08-01",
-        "end_date": "2023-08-31",
+        "end_date": "2023-08-01",
         "serie_name": "FXUSDCAD"
     }
 
@@ -22,7 +22,9 @@ def test_get_exchange_rates():
 
     expected_response = {
         "serie_name": "FXUSDCAD",
-        "exchange_rate": 1.3291
+        "exchange_rate": {
+            "2023-08-01": 1.33
+        }
     }
 
     assert response.json() == expected_response
