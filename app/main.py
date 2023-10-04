@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.exchange import router as exchange_router
+from app.api.controller import exchange_rate_controller
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -15,4 +15,4 @@ app.add_middleware(
 )
 
 # Include the API router in the main app
-app.include_router(exchange_router)
+app.include_router(exchange_rate_controller.router)
