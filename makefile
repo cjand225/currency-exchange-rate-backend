@@ -15,9 +15,10 @@ run:
 stop:
 	docker stop $(CONTAINER_NAME)
 
-# Remove the Docker container
+# Remove the Docker container and image
 clean:
 	docker rm $(CONTAINER_NAME)
+	docker rmi $(IMAGE_NAME)
 
 # Build and run the Docker container
 up: build run
