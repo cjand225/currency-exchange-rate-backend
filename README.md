@@ -12,6 +12,7 @@ This repository contains the backend portion of the Currency Exchange Rate Web A
 
 - Python 3.11+
 - Docker (optional, for containerization)
+- An environment variable `ENV` set to either "production" or "development".
 
 ## Getting Started
 
@@ -35,6 +36,8 @@ Follow these steps to set up and run the backend of the Currency Exchange Rate W
    ```
 
 3. **Run the Application**:
+
+   Before running the application, ensure you have set the `ENV` environment variable.
 
    If not using Docker, you can run the application locally using Uvicorn:
 
