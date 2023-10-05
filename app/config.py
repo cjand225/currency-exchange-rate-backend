@@ -1,20 +1,47 @@
-"""
-config.py
-
-This module manages the configuration settings for the application, primarily by reading environment variables.
-"""
-
 import os
 
-# Fetch the environment type (e.g., production, development) from the environment variables.
-ENV = os.getenv("FASTAPI_ENV")
 
-# Check and raise an error if the essential environment variable isn't set.
-if ENV is None:
-    raise ValueError("The ENV environment variable is not set!")
+class Config:
+    """
+    Base configuration class.
 
-# Set configuration values based on the environment type.
-if ENV == "production":
-    ORIGINS = []
-elif ENV == "development":
+    This class provides default configurations for the application. It can be extended by child classes
+    to override configurations for specific environments.
+    """
+    ENV = "development"  # Default environment
+    ORIGINS = []  # Default allowed origins for CORS
+
+
+class DevelopmentConfig(Config):
+    """
+    Development-specific configurations.
+
+    This class extends the base Config class and overrides configurations specific to the development environment.
+    """
     ORIGINS = ['http://localhost:3000', 'https://localhost:3000']
+
+
+class ProductionConfig(Config):
+    """
+    Production-specific configurations.
+
+    This class extends the base Config class and overrides configurations specific to the production environment.
+    """
+    ENV = "production"
+
+
+def get_config():
+    """
+    Determine the configuration to use based on the ENV environment variable.
+
+    Returns:
+        class: A configuration class (either DevelopmentConfig or ProductionConfig).
+
+    Note:
+        If the ENV environment variable is not set, it defaults to the development configuration.
+    """
+    env = os.getenv("ENV", default="development")
+    if env == "production":
+        return ProductionConfig
+    else:
+        return DevelopmentConfig

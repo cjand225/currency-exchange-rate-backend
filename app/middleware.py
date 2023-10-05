@@ -6,7 +6,7 @@ This module provides functions to manage and add middleware to the FastAPI appli
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import ORIGINS
+from app.config import get_config
 
 
 def add_middleware(app: FastAPI) -> None:
@@ -19,10 +19,11 @@ def add_middleware(app: FastAPI) -> None:
     Returns:
         None
     """
+    config = get_config()
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=ORIGINS,
+        allow_origins=config.ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
