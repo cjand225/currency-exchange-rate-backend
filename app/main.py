@@ -11,4 +11,4 @@ from app.factory import create_app
 app = create_app()
 
 # Include the API router in the main app.
-app.include_router(exchange_rate_controller.router)
+app.include_router(exchange_rate_controller.router, prefix="/exchange-api/v1")

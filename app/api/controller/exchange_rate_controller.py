@@ -14,7 +14,7 @@ from app.api.service.exchange_rate_service import ExchangeRateService
 router = APIRouter()
 
 
-@router.get("/exchange_rates/")
+@router.get("/exchange-rates/")
 def get_exchange_rates(
     from_currency: Annotated[
         str | None,
