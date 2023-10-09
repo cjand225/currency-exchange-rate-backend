@@ -28,6 +28,7 @@ class ProductionConfig(Config):
     This class extends the base Config class and overrides configurations specific to the production environment.
     """
     ENV = "production"
+    ORIGINS = ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3000/exchange-rate-app', 'https://localhost:3000/exchange-rate-app']
 
 
 def get_config():
