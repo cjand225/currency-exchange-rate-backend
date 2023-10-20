@@ -8,6 +8,7 @@ to fetch exchange rate data and provides an endpoint to retrieve exchange rates 
 from fastapi import APIRouter, Query, status
 from fastapi.responses import JSONResponse
 from typing import Annotated
+from datetime import datetime
 from app.api.service.exchange_rate_service import ExchangeRateService
 
 # Create a new router instance for the exchange rate endpoints.
@@ -45,6 +46,23 @@ def get_exchange_rates(
     Returns:
         JSONResponse: A JSON response containing the exchange rate data or an error message.
     """
+
+    # Convert provided string dates to datetime objects for comparison.
+    try:
+        parsed_start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        parsed_end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    except ValueError:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"error": "Invalid date format provided. Please use YYYY-MM-DD."}
+        )
+
+    # Validate date range
+    if parsed_start_date > parsed_end_date:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"error": "Invalid date range. Start date must be before or equal to end date."}
+        )
 
     # Fetch exchange rate data using the ExchangeRateService.
     exchange_rate, error = ExchangeRateService.fetch_exchange_rates(
