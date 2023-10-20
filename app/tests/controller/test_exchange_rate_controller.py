@@ -46,7 +46,7 @@ def test_get_exchange_rates_success():
     returns the expected status code and JSON response.
     """
     with patch('app.api.service.exchange_rate_service.ExchangeRateService.fetch_exchange_rates', new=mock_fetch_exchange_rates_success):
-        response = client.get("/exchange_rates/")
+        response = client.get("/exchange-api/v1/exchange-rates/")
         assert response.status_code == 200
         assert response.json() == {
             "serie_name": "FXUSDCAD",
@@ -62,6 +62,6 @@ def test_get_exchange_rates_failure():
     returns the expected status code and error message in the JSON response.
     """
     with patch('app.api.service.exchange_rate_service.ExchangeRateService.fetch_exchange_rates', new=mock_fetch_exchange_rates_failure):
-        response = client.get("/exchange_rates/")
+        response = client.get("/exchange-api/v1/exchange-rates/")
         assert response.status_code == 500
         assert response.json() == {"error": "Some error occurred"}
